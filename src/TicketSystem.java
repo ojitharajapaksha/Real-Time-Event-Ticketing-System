@@ -25,7 +25,7 @@ public class TicketSystem {
             System.out.println("5. Load the previous configuration");
             System.out.println("6. Save the current configuration");
             System.out.println("7. Exit the system");
-            System.out.println("Enter your choice between 1-7 : ");
+            System.out.print("Enter your choice between 1-7 : ");
 
             String choice = scanner.nextLine();
             switch (choice){
@@ -96,7 +96,7 @@ public class TicketSystem {
     private static int getPositiveInput(String get){
         int value;
         while (true){
-            System.out.println(get);
+            System.out.print(get);
             try {
                 value = Integer.parseInt(scanner.nextLine());
                 if (value > 0) return value;

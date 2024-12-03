@@ -59,10 +59,10 @@ public class TicketConfiguration {
     public static TicketConfiguration loadFromFile(String filename) throws IOException{
         try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
             TicketConfiguration config = new TicketConfiguration();
-            config.setTotalTickets(Integer.parseInt(reader.readLine().split(":")[1]));
-            config.setTicketReleaseRate(Integer.parseInt(reader.readLine().split(":")[1]));
-            config.setCustomerRetrievalRate(Integer.parseInt(reader.readLine().split(":")[1]));
-            config.setMaxTicketCapacity(Integer.parseInt(reader.readLine().split(":")[1]));
+            config.setTotalTickets(Integer.parseInt(reader.readLine().split(": ")[1]));
+            config.setTicketReleaseRate(Integer.parseInt(reader.readLine().split(": ")[1]));
+            config.setCustomerRetrievalRate(Integer.parseInt(reader.readLine().split(": ")[1]));
+            config.setMaxTicketCapacity(Integer.parseInt(reader.readLine().split(": ")[1]));
             return config;
         }
     }
