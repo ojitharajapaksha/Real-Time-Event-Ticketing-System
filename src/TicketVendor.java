@@ -6,12 +6,13 @@ public class TicketVendor implements Runnable{
     public TicketVendor(TicketPool ticketPool, int ticketsToGenerate, int releaseRate){
         this.ticketPool=ticketPool;
         this.ticketsAvailable=ticketsToGenerate;
+        this.releaseRate=releaseRate;
     }
 
     @Override
     public void run(){
         try{
-            for(int i=1, i<=ticketsAvailable; i++){
+            for (int i = 1; i <= ticketsAvailable; i++){
                 String ticket = "Ticket-" +i;
                 ticketPool.addTicket(ticket);
                 Thread.sleep(1000/releaseRate);

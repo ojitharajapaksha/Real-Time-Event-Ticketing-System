@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class TicketSystem {
+    private static TicketConfiguration config = new TicketConfiguration();
+    private static boolean systemRunning = false;
+
+    private static final TicketPool ticketPool = new TicketPool();
+    private static final List<String> log = Collections.synchronizedList(new ArrayList<>());
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args){
@@ -19,7 +24,7 @@ public class TicketSystem {
             System.out.println("4. Display the logs");
             System.out.println("5. Load the previous configuration");
             System.out.println("6. Save the current configuration");
-            System.out.println("5. Exit the system");
+            System.out.println("7. Exit the system");
             System.out.println("Enter your choice between 1-7 : ");
 
             String choice = scanner.nextLine();
@@ -72,8 +77,17 @@ public class TicketSystem {
 
     private static void saveTicketConfiguration(){
         try{
-            cofig.saveToFile("config.txt");
+            config.saveToFile("config.txt");
             System.out.println("Configuration saved to config.txt");
+        }catch (IOException e){
+            System.err.println("Failed to save configuration: " + e.getMessage());
+        }
+    }
+
+    private static void loadTicketConfiguration(){
+        try{
+            config = TicketConfiguration.loadFromFile("config.txt");
+            System.out.println("Configuration loaded: " + config);
         }catch (IOException e){
             System.err.println("Failed to load configuration: " + e.getMessage());
         }
@@ -101,7 +115,7 @@ public class TicketSystem {
         systemRunning = true;
         logEvent("System started");
 
-        Thread vendor = new Thread(new TicketVendor(ticketPool, config.getTotoalTickets(), config.getTicketReleaseRate()));
+        Thread vendor = new Thread(new TicketVendor(ticketPool, config.getTotalTickets(), config.getTicketReleaseRate()));
         Thread customer = new Thread(new TicketCustomer(ticketPool, config.getCustomerRetrievalRate()));
 
         vendor.start();

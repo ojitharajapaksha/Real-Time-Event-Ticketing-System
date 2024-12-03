@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class TicketConfiguration {
     private int totalTickets;
     private int ticketReleaseRate;
@@ -43,5 +45,30 @@ public class TicketConfiguration {
 
     public void setMaxTicketCapacity(int maxTicketCapacity) {
         this.maxTicketCapacity = maxTicketCapacity;
+    }
+
+    public void saveToFile(String filename) throws IOException{
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))){
+            writer.write("Total number of tickets: " + totalTickets + "\n");
+            writer.write("Ticket release rate per second: " + ticketReleaseRate + "\n");
+            writer.write("Customer retrieval rate per second: " + customerRetrievalRate + "\n");
+            writer.write("Maximum ticket capacity: " + maxTicketCapacity + "\n");
+        }
+    }
+
+    public static TicketConfiguration loadFromFile(String filename) throws IOException{
+        try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
+            TicketConfiguration config = new TicketConfiguration();
+            config.setTotalTickets(Integer.parseInt(reader.readLine().split(":")[1]));
+            config.setTicketReleaseRate(Integer.parseInt(reader.readLine().split(":")[1]));
+            config.setCustomerRetrievalRate(Integer.parseInt(reader.readLine().split(":")[1]));
+            config.setMaxTicketCapacity(Integer.parseInt(reader.readLine().split(":")[1]));
+            return config;
+        }
+    }
+
+    @Override
+    public String toString(){
+        return "Configuration{" + "totalTickets" + totalTickets + ", ticketReleaseRate=" + ticketReleaseRate + ", customerRetrievalRate=" + customerRetrievalRate + ", maxTicketRetrievalRate=" + maxTicketCapacity + '}';
     }
 }

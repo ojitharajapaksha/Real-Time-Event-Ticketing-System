@@ -16,7 +16,7 @@ public class TicketPool {
             while (tickets.size() >= maxCapacity){
                 Thread.sleep(100);
             }
-            ticket.put(ticket);
+            tickets.put(ticket);
             System.out.println("TicketPool Added " + ticket);
         }catch (InterruptedException e){
             Thread.currentThread().interrupt();
