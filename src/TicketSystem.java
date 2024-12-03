@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 
 public class TicketSystem {
@@ -48,5 +49,77 @@ public class TicketSystem {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
+
+    private static void configureTicketSystem(){
+        int totalTickets = getPositiveInput("Enter the total number of tickets: ");
+        int ticketReleaseRate = getPositiveInput("Enter the ticket release rate per second: ");
+        int customerRetrievalRate = getPositiveInput("Enter the customer retrieval rate per second: ");
+        int maxTicketCapacity;
+        while (true){
+            maxTicketCapacity = getPositiveInput("Enter the maximum ticket capacity: ");
+            if (maxTicketCapacity >= totalTickets){
+                break;
+            }else {
+                System.out.println("Maximum ticket capacity cannot be less than total number of tickets. ");
+            }
+        }
+
+        config = new TicketConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
+
+        System.out.println("Configuration saved successfully!");
+    }
+
+    private static void saveTicketConfiguration(){
+        try{
+            cofig.saveToFile("config.txt");
+            System.out.println("Configuration saved to config.txt");
+        }catch (IOException e){
+            System.err.println("Failed to load configuration: " + e.getMessage());
+        }
+    }
+
+    private static int getPositiveInput(String get){
+        int value;
+        while (true){
+            System.out.println(get);
+            try {
+                value = Integer.parseInt(scanner.nextLine());
+                if (value > 0) return value;
+                System.out.println("Invalid input. Please enter a positive integer.");
+            }catch (NumberFormatException e){
+                System.out.println("Invalid input. Please enter a positive integer.");
+            }
+        }
+    }
+
+    private static void startTicketSystem(){
+        if (systemRunning){
+            System.out.println("System is already running.");
+            return;
+        }
+        systemRunning = true;
+        logEvent("System started");
+
+        Thread vendor = new Thread(new TicketVendor(ticketPool, config.getTotoalTickets(), config.getTicketReleaseRate()));
+        Thread customer = new Thread(new TicketCustomer(ticketPool, config.getCustomerRetrievalRate()));
+
+        vendor.start();
+        customer.start();
+    }
+
+    private static void stopTicketSystem(){
+        systemRunning = false;
+        logEvent("System stopped");
+        System.out.println("System stopped.");
+    }
+
+    private static void displayLogs(){
+        System.out.println("--------------------- System Log ----------------------");
+        log.forEach(System.out::println);
+    }
+
+    private static void logEvent(String message){
+        log.add(new Date() + ": " + message);
     }
 }
