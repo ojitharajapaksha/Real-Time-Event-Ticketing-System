@@ -13,7 +13,7 @@ public class TicketCustomer implements Runnable{
             while(!Thread.currentThread().isInterrupted()){
                 String ticket=ticketPool.removeTicket();
                 if (ticket!=null){
-                    System.out.println("Customer purchased: " + ticket);
+                    System.out.println("Customer Purchased: " + ticket);
                 }
                 Thread.sleep(1000/retrievalRate);
             }
