@@ -49,7 +49,9 @@ public class TicketSystem {
                     break;
                 case "7":
                     System.out.println("Exiting the system. See you again soon!");
-                    return;
+                    scanner.close();
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
