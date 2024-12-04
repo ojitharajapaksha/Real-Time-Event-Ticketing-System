@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class TicketSystem {
-    private static TicketConfiguration config = new TicketConfiguration();
-    private static boolean systemRunning = false;
+    private static TicketConfiguration ticketConfig = new TicketConfiguration();
+    private static boolean isSystemRunning = false;
 
     private static final TicketPool ticketPool = new TicketPool();
     private static final List<String> log = Collections.synchronizedList(new ArrayList<>());
@@ -72,14 +72,14 @@ public class TicketSystem {
             }
         }
 
-        config = new TicketConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
+        ticketConfig = new TicketConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
 
         System.out.println("Configuration saved successfully!");
     }
 
     private static void saveTicketConfiguration(){
         try{
-            config.saveToFile("config.txt");
+            ticketConfig.saveToFile("config.txt");
             System.out.println("Configuration saved to config.txt");
         }catch (IOException e){
             System.err.println("Failed to save configuration: " + e.getMessage());
@@ -88,8 +88,8 @@ public class TicketSystem {
 
     private static void loadTicketConfiguration(){
         try{
-            config = TicketConfiguration.loadFromFile("config.txt");
-            System.out.println("Configuration loaded: " + config);
+            ticketConfig = TicketConfiguration.loadFromFile("config.txt");
+            System.out.println("Configuration loaded: " + ticketConfig);
         }catch (IOException e){
             System.err.println("Failed to load configuration: " + e.getMessage());
         }
@@ -110,22 +110,22 @@ public class TicketSystem {
     }
 
     private static void startTicketSystem(){
-        if (systemRunning){
+        if (isSystemRunning){
             System.out.println("System is already running.");
             return;
         }
-        systemRunning = true;
+        isSystemRunning = true;
         logEvent("System started");
 
-        Thread vendor = new Thread(new TicketVendor(ticketPool, config.getTotalTickets(), config.getTicketReleaseRate()));
-        Thread customer = new Thread(new TicketCustomer(ticketPool, config.getCustomerRetrievalRate()));
+        Thread vendor = new Thread(new TicketVendor(ticketPool, ticketConfig.getTotalTickets(), ticketConfig.getTicketReleaseRate()));
+        Thread customer = new Thread(new TicketCustomer(ticketPool, ticketConfig.getCustomerRetrievalRate()));
 
         vendor.start();
         customer.start();
     }
 
     private static void stopTicketSystem(){
-        systemRunning = false;
+        isSystemRunning = false;
         logEvent("System stopped");
         System.out.println("System stopped.");
     }
