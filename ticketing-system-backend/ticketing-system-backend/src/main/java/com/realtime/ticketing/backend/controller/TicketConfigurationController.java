@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/configurations")
-@CrossOrigin(origins = "http://localhost:3000")
 public class TicketConfigurationController {
 
     @Autowired
     private TicketConfigurationService service;
 
     @PostMapping
-    public TicketConfiguration save(@RequestBody TicketConfiguration config) throws IllegalAccessException{
+    public TicketConfiguration save(@RequestBody TicketConfiguration config) {
         return service.saveConfiguration(config);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TicketConfiguration> get(@PathVariable Long id){
-        return service.getConfiguration(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return service.getConfiguration(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

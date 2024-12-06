@@ -12,10 +12,7 @@ public class TicketConfigurationService {
     @Autowired
     private TicketConfigurationRepository repository;
 
-    public TicketConfiguration saveConfiguration(TicketConfiguration config) throws IllegalAccessException {
-        if (config.getMaxTicketCapacity() < config.getTotalTickets()){
-            throw new IllegalAccessException("Maximum ticket capacity cannot be less than total number of tickets.");
-        }
+    public TicketConfiguration saveConfiguration(TicketConfiguration config){
         return repository.save(config);
     }
 
