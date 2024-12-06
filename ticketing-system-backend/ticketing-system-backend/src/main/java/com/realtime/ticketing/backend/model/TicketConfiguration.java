@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class TicketConfiguration {
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
