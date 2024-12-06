@@ -1,7 +1,7 @@
 package com.realtime.ticketing.backend.controller;
 
-import com.realtime.ticketing.backend.TicketConfiguration;
-import com.realtime.ticketing.backend.TicketConfigurationService;
+import com.realtime.ticketing.backend.model.TicketConfiguration;
+import com.realtime.ticketing.backend.service.TicketConfigurationService;
 import com.realtime.ticketing.backend.model.TicketConfiguration;
 import com.realtime.ticketing.backend.service.TicketConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;

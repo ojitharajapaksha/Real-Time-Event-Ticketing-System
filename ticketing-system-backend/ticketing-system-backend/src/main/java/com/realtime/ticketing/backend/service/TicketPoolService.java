@@ -2,7 +2,6 @@ package com.realtime.ticketing.backend.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.BlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 

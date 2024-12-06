@@ -2,7 +2,6 @@ package com.realtime.ticketing.backend.service;
 
 import com.realtime.ticketing.backend.model.TicketConfiguration;
 import com.realtime.ticketing.backend.repository.TicketConfigurationRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class TicketConfigurationService {
         return repository.save(config);
     }
 
-    public Optional<TicketConfiguration> getConfiguration(Log id){
+    public Optional<TicketConfiguration> getConfiguration(Long id){
         return repository.findById(id);
     }
 }
