@@ -11,15 +11,15 @@ public class TicketPoolService {
     private final int maxCapacity = 10;
 
     public void addTicket(String ticket) throws InterruptedException{
-        if (ticket.size() >= maxCapacity){
+        if (tickets.size() >= maxCapacity){
             Thread.sleep(100);
         }
-        ticket.put(ticket);
+        tickets.put(ticket);
     }
     public String removeTicket(){
         return tickets.poll();
     }
-    public int getTicketCount{
+    public int getTicketCount(){
         return tickets.size();
     }
 }
