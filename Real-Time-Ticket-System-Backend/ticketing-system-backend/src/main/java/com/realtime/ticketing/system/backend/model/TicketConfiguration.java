@@ -1,3 +1,4 @@
+// Configure ticket system
 package com.realtime.ticketing.system.backend.model;
 
 import jakarta.persistence.Entity;
@@ -10,13 +11,19 @@ public class TicketConfiguration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Unique identifier for the configuration
     private Long id;
 
+    // Total number of tickets
     private int totalTickets;
+    // Tickets releasing rate by vendor
     private int ticketReleaseRate;
+    // Ticket retrieval rate by customer
     private int customerRetrievalRate;
+    // Maximum ticket capacity of the ticket system
     private int maxTicketCapacity;
 
+    // Getters and Setters for the ticket configuration
     public int getTotalTickets() {
         return totalTickets;
     }
