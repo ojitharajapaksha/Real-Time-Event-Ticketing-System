@@ -1,18 +1,29 @@
+// Main class to run the Real-Time Ticket System
 import java.io.IOException;
 import java.util.*;
 
 public class TicketSystem {
+    // Maintain the configuration for the ticketing system
     private static TicketConfiguration ticketConfig = new TicketConfiguration();
+
+    // Tracking the system is running
     private static boolean isSystemRunning = false;
 
+    // Common resource for ticket management
     private static final TicketPool ticketPool = new TicketPool();
+
+    // Thread safe list for storing the system logs
     private static final List<String> log = Collections.synchronizedList(new ArrayList<>());
+
+    // Scanner for user inputs
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args){
+        // Displaying the main menu to the user
         displayMenu();
     }
 
+    // Displays the main menu for user to choose choice
     private static void displayMenu(){
         while (true){
             System.out.println("-------------------------------------------------------");
@@ -58,11 +69,14 @@ public class TicketSystem {
         }
     }
 
+    // Configuring the ticket system with user inputs
     private static void configureTicketSystem(){
         int totalTickets = getPositiveInput("Enter the total number of tickets: ");
         int ticketReleaseRate = getPositiveInput("Enter the ticket release rate per second: ");
         int customerRetrievalRate = getPositiveInput("Enter the customer retrieval rate per second: ");
         int maxTicketCapacity;
+
+        // Checking the maximum ticket capacity is greater than or equal to the total number of tickets
         while (true){
             maxTicketCapacity = getPositiveInput("Enter the maximum ticket capacity: ");
             if (maxTicketCapacity >= totalTickets){
@@ -72,11 +86,13 @@ public class TicketSystem {
             }
         }
 
+        // Updating the system configuration
         ticketConfig = new TicketConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
 
         System.out.println("Configuration saved successfully!");
     }
 
+    // Saving the configuration to text file
     private static void saveTicketConfiguration(){
         try{
             ticketConfig.saveToFile("config.txt");
@@ -86,6 +102,7 @@ public class TicketSystem {
         }
     }
 
+    // Loading the configuration from saved text file
     private static void loadTicketConfiguration(){
         try{
             ticketConfig = TicketConfiguration.loadFromFile("config.txt");
@@ -95,6 +112,7 @@ public class TicketSystem {
         }
     }
 
+    // Requesting positive integer from user
     private static int getPositiveInput(String get){
         int value;
         while (true){
@@ -109,6 +127,7 @@ public class TicketSystem {
         }
     }
 
+    // Starting the ticketing ssytem
     private static void startTicketSystem(){
         if (isSystemRunning){
             System.out.println("System is already running.");
@@ -117,6 +136,7 @@ public class TicketSystem {
         isSystemRunning = true;
         logEvent("System started");
 
+        // Threads created for vendor and  customer operations
         Thread vendor = new Thread(new TicketVendor(ticketPool, ticketConfig.getTotalTickets(), ticketConfig.getTicketReleaseRate()));
         Thread customer = new Thread(new TicketCustomer(ticketPool, ticketConfig.getCustomerRetrievalRate()));
 
@@ -124,17 +144,20 @@ public class TicketSystem {
         customer.start();
     }
 
+    // Stops the ticketing system
     private static void stopTicketSystem(){
         isSystemRunning = false;
         logEvent("System stopped");
         System.out.println("System stopped.");
     }
 
+    // Displaying the system logs
     private static void displayLogs(){
         System.out.println("--------------------- System Log ----------------------");
         log.forEach(System.out::println);
     }
 
+    // Records the events in the log list
     private static void logEvent(String message){
         log.add(new Date() + ": " + message);
     }
