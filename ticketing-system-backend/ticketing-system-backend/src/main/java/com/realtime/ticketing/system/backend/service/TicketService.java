@@ -43,7 +43,7 @@ public class TicketService {
 
     public void startSystem(){
         if (isRunning){
-            throw new IllegalStateException("Error: System is already running.")
+            throw new IllegalStateException("Error: System is already running.");
         }
         if (configuration == null){
             throw new IllegalStateException("Error: System is not configured. Configure before starting.");
@@ -63,7 +63,7 @@ public class TicketService {
         }
         isRunning=false;
         executorService.shutdownNow();
-        logEvent("System stopped.". "INFO", "stop system");
+        logEvent("System stopped.", "INFO", "stop system");
     }
 
     public void addTicket(String ticket){
@@ -85,10 +85,9 @@ public class TicketService {
         String ticket = ticketQueue.poll();
         if (ticket != null){
             ticketPoolRepository.deleteByTicketName(ticket);
-            logEvent("Ticket added: " + ticket, "INFO", "add_ticket");
-        }catch (InterruptedException e){
-            Thread.currentThread()interrupt();
-            logEvent("Error adding ticket: " + e.getMessage(), "ERROR", "add ticket");
+            logEvent("Ticket purchased: " + ticket, "INFO", "remove_ticket");
+        }else {
+            logEvent("No tickets available for purchase.", "WARNING", "remove_ticket");
         }
         return ticket;
     }
@@ -112,7 +111,7 @@ public class TicketService {
     }
 
     private void logEvent(String message, String type, String action){
-        logRepository.save(new TicketLog(message, new Date(), type, action))
+        logRepository.save(new TicketLog(message, new Date(), type, action));
     }
 
     private void validateConfiguration(TicketConfiguration config){

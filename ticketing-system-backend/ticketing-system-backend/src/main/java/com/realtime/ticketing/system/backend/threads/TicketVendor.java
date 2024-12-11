@@ -1,13 +1,13 @@
 package com.realtime.ticketing.system.backend.threads;
 
-import com.realtime.ticketing.system.backend.service.TicketService
+import com.realtime.ticketing.system.backend.service.TicketService;
 
 public class TicketVendor implements Runnable{
     private final TicketService ticketService;
     private final int ticketsToGenarate;
     private final int releaseRate;
 
-    public TicketVendor(TicketService ticketService, int ticketsToGenarate. int releaseRate){
+    public TicketVendor(TicketService ticketService, int ticketsToGenarate, int releaseRate){
         this.ticketService=ticketService;
         this.ticketsToGenarate=ticketsToGenarate;
         this.releaseRate=releaseRate;
