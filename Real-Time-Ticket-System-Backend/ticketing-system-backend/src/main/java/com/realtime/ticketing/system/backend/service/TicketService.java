@@ -1,3 +1,4 @@
+// Managing the ticketing operations
 package com.realtime.ticketing.system.backend.service;
 
 import com.realtime.ticketing.system.backend.model.TicketConfiguration;
@@ -23,8 +24,11 @@ public class TicketService {
     private TicketPoolRepository ticketPoolRepository;
 
     private TicketConfiguration configuration;
+    // Current system configuration
     private final BlockingQueue<String> ticketQueue;
+    // Queue to manage tickets
     private final ExecutorService executorService;
+    // Thread pool for ticketing system operations
     private boolean isRunning;
 
     public TicketService() {
@@ -33,12 +37,14 @@ public class TicketService {
         this.executorService = Executors.newCachedThreadPool();
     }
 
+    // Configure the ticket system
     public void configureSystem(TicketConfiguration config) {
         validateConfiguration(config);
         this.configuration = config;
         logEvent("System configured: " + config.toString(), "INFO", "configure_system");
     }
 
+    // Starting the ticket system
     public void startSystem() {
         if (isRunning) {
             throw new IllegalStateException("Error: System is already running.");
@@ -55,6 +61,7 @@ public class TicketService {
         executorService.submit(customer);
     }
 
+    // Stopping the ticket system
     public void stopSystem() {
         if (!isRunning) {
             throw new IllegalStateException("Error: System is not running.");
@@ -64,6 +71,7 @@ public class TicketService {
         logEvent("System stopped.", "INFO", "stop_system");
     }
 
+    // Add a ticket to a queue
     public void addTicket(String ticket) {
         try {
             if (ticketQueue.size() >= configuration.getMaxTicketCapacity()) {
@@ -79,6 +87,7 @@ public class TicketService {
         }
     }
 
+    // Remove a ticket from queue
     public String removeTicket() {
         String ticket = ticketQueue.poll();
         if (ticket != null) {
@@ -90,14 +99,17 @@ public class TicketService {
         return ticket;
     }
 
+    // Get the current number of tickets in the queue
     public int getTicketCount() {
         return ticketQueue.size();
     }
 
+    // Retrieve all the ticket logs
     public List<TicketLog> getLogs() {
         return logRepository.findAll();
     }
 
+    // Delete all the ticket logs
     public void deleteAllLogs() {
         try {
             logRepository.deleteAll();
@@ -108,10 +120,12 @@ public class TicketService {
         }
     }
 
+    // Log event with message, type and action
     private void logEvent(String message, String type, String action) {
         logRepository.save(new TicketLog(message, new Date(), type, action));
     }
 
+    // Validate the configuration for the system
     private void validateConfiguration(TicketConfiguration config) {
         if (config.getTotalTickets() <= 0 || config.getTicketReleaseRate() <= 0 ||
                 config.getCustomerRetrievalRate() <= 0 || config.getMaxTicketCapacity() <= 0) {

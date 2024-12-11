@@ -1,3 +1,4 @@
+// This class represents the tickets in the pool
 package com.realtime.ticketing.system.backend.model;
 
 import jakarta.persistence.Entity;
@@ -10,7 +11,9 @@ public class TicketPool {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Unique identifier for the ticket
     private Long id;
+    // Name of the ticket
     private String ticketName;
 
     public TicketPool() {
@@ -20,6 +23,7 @@ public class TicketPool {
         this.ticketName = ticketName;
     }
 
+    // Getters and Setters for the Ticket pool
     public Long getId() {
         return id;
     }

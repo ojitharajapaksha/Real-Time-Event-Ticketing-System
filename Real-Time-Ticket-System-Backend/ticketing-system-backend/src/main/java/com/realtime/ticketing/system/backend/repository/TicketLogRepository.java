@@ -1,3 +1,4 @@
+// Repository for the ticket log
 package com.realtime.ticketing.system.backend.repository;
 
 import com.realtime.ticketing.system.backend.model.TicketLog;
