@@ -9,5 +9,13 @@ import jakarta.persistence.Id;
 public class TicketPool {
 
     @Id
-    @GeneratedValue(strategy = )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String ticketName;
+
+    public TicketPool(){}
+
+    public TicketPool(String ticketName){
+        this.ticketName = ticketName;
+    }
 }
