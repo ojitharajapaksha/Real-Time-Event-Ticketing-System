@@ -1,27 +1,28 @@
 package com.realtime.ticketing.system.backend.model;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class TicketConfiguration {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int totalTickets;
-    private int ticketRetrievalRate;
+    private int ticketReleaseRate;
     private int customerRetrievalRate;
     private int maxTicketCapacity;
 
-    public Long getId() {
-        return id;
-    }
-
-    public int getTotalTickets() {
+    public int getTotalTickets(){
         return totalTickets;
     }
 
-    public int getTicketRetrievalRate() {
-        return ticketRetrievalRate;
+    public int getTicketReleaseRate() {
+        return ticketReleaseRate;
     }
 
     public int getCustomerRetrievalRate() {
@@ -32,23 +33,29 @@ public class TicketConfiguration {
         return maxTicketCapacity;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setTotalTickets(int totalTickets) {
         this.totalTickets = totalTickets;
     }
 
-    public void setTicketRetrievalRate(int ticketRetrievalRate) {
-        this.ticketRetrievalRate = ticketRetrievalRate;
+    public void setTicketReleaseRate(int ticketReleaseRate) {
+        this.ticketReleaseRate = ticketReleaseRate;
+    }
+
+    public void setCustomerRetrievalRate(int customerRetrievalRate) {
+        this.customerRetrievalRate = customerRetrievalRate;
     }
 
     public void setMaxTicketCapacity(int maxTicketCapacity) {
         this.maxTicketCapacity = maxTicketCapacity;
     }
 
-    public void setCustomerRetrievalRate(int customerRetrievalRate) {
-        this.customerRetrievalRate = customerRetrievalRate;
+    @Override
+    public String toString(){
+        return "TicketConfiguration{" +
+        "totalTickets = " + totalTickets +
+        ", ticketReleaseRate = " + ticketReleaseRate +
+                ", customerRetrievalRate = " + customerRetrievalRate +
+                ", maxTicketCapacity = " + maxTicketCapacity +
+                '}';
     }
 }
