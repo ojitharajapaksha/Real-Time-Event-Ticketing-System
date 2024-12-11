@@ -3,7 +3,7 @@ import ConfigurationForm from './components/ConfigurationForm';
 import ControlPanel from './components/ControlPanel';
 import LogDisplay from './components/LogDisplay';
 import TicketStatus from './components/TicketStatus';
-import './styles.css';
+import './style.css';
 
 const App = () => {
   const [isConfigured, setIsConfigured] = useState(false);
