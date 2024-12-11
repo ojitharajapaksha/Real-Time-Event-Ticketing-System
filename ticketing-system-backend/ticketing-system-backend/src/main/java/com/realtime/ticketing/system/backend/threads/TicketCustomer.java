@@ -1,37 +1,43 @@
 package com.realtime.ticketing.system.backend.threads;
 
 import com.realtime.ticketing.system.backend.service.TicketService;
+
 import java.util.concurrent.TimeUnit;
 
-public class TicketCustomer implements  Runnable{
+public class TicketCustomer implements Runnable {
 
     private final TicketService ticketService;
     private final int retrievalRate;
 
-    public TicketCustomer(TicketService ticketService, int retrievalRate){
+    public TicketCustomer(TicketService ticketService, int retrievalRate) {
         this.ticketService = ticketService;
         this.retrievalRate = retrievalRate;
     }
 
     @Override
-    public void run(){
-        while (!Thread.currentThread().isInterrupted()){
+    public void run() {
+
+        while (!Thread.currentThread().isInterrupted()) {
             String ticket = ticketService.removeTicket();
-            if(ticket != null){
-                System.out.println("Ticket puchased: " + ticket);
-            }else {
+            if (ticket != null) {
+
+                System.out.println("Ticket purchased: " + ticket);
+            } else {
+
                 System.out.println("No tickets available for purchase.");
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
+
                     Thread.currentThread().interrupt();
                     break;
                 }
             }
 
-            try{
-                TimeUnit.MILLISECONDS.sleep(1000/retrievalRate);
-            }catch (InterruptedException e){
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(1000 / retrievalRate);
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }

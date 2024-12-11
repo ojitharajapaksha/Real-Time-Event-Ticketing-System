@@ -13,22 +13,23 @@ public class TicketPool {
     private Long id;
     private String ticketName;
 
-    public TicketPool(){}
+    public TicketPool() {
+    }
 
-    public TicketPool(String ticketName){
+    public TicketPool(String ticketName) {
         this.ticketName = ticketName;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
-    }
-
-    public String getTicketName() {
-        return ticketName;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTicketName() {
+        return ticketName;
     }
 
     public void setTicketName(String ticketName) {

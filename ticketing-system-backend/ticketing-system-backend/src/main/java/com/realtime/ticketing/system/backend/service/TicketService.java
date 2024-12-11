@@ -91,7 +91,7 @@ public class TicketService {
     }
 
     public int getTicketCount() {
-        return ticketQueue.size(); // Dynamically returns the size of the ticket queue
+        return ticketQueue.size();
     }
 
     public List<TicketLog> getLogs() {

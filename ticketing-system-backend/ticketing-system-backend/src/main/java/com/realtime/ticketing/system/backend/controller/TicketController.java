@@ -1,8 +1,8 @@
 package com.realtime.ticketing.system.backend.controller;
 
 import com.realtime.ticketing.system.backend.model.TicketConfiguration;
-import com.realtime.ticketing.system.backend.service.TicketService;
 import com.realtime.ticketing.system.backend.model.TicketLog;
+import com.realtime.ticketing.system.backend.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class TicketConfigurationController {
+public class TicketController {
 
     @Autowired
     private TicketService ticketService;
@@ -18,20 +18,19 @@ public class TicketConfigurationController {
     @PostMapping("/configure")
     public String configureSystem(@RequestBody TicketConfiguration config) {
         ticketService.configureSystem(config);
-        return "System Configuration Successful.";
+        return "System configured successfully.";
     }
 
     @PostMapping("/start")
     public String startSystem() {
         ticketService.startSystem();
-        return "System Started.";
-
+        return "System started.";
     }
 
     @PostMapping("/stop")
     public String stopSystem() {
         ticketService.stopSystem();
-        return "System Stopped.";
+        return "System stopped.";
     }
 
     @GetMapping("/logs")
@@ -48,6 +47,5 @@ public class TicketConfigurationController {
     public String deleteLogs() {
         ticketService.deleteAllLogs();
         return "All logs have been deleted successfully.";
-
     }
 }
