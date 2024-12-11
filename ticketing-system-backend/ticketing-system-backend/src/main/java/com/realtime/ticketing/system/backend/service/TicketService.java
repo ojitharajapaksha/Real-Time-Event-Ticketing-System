@@ -26,7 +26,7 @@ public class TicketService {
 
     private TicketConfiguration configuration;
     private final BlockingQueue<String> ticketQueue;
-    private final ExecutorService = new LinkedBlockingQueue<>();
+    private final ExecutorService executorService;
     private boolean isRunning;
 
     public TicketService(){
@@ -43,7 +43,7 @@ public class TicketService {
 
     public void startSystem(){
         if (isRunning){
-            throw new IllegalAccessException("Error: System is already running.")
+            throw new IllegalStateException("Error: System is already running.")
         }
         if (configuration == null){
             throw new IllegalStateException("Error: System is not configured. Configure before starting.");
@@ -63,7 +63,7 @@ public class TicketService {
         }
         isRunning=false;
         executorService.shutdownNow();
-        logEvent("System stopped.". "INFO", "stop system")
+        logEvent("System stopped.". "INFO", "stop system");
     }
 
     public void addTicket(String ticket){
@@ -76,7 +76,7 @@ public class TicketService {
             ticketPoolRepository.save(new TicketPool(ticket));
             logEvent("Ticket added: " + ticket, "INFO", "add_ticket");
         }catch (InterruptedException e){
-            Thread.currentThread()interrupt();
+            Thread.currentThread().interrupt();
             logEvent("Error adding ticket: " + e.getMessage(), "ERROR", "add ticket");
         }
     }
@@ -97,7 +97,7 @@ public class TicketService {
         return ticketQueue.size();
     }
 
-    public List<TIcketLog> getLogs(){
+    public List<TicketLog> getLogs(){
         return logRepository.findAll();
     }
 

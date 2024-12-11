@@ -18,4 +18,20 @@ public class TicketPool {
     public TicketPool(String ticketName){
         this.ticketName = ticketName;
     }
+
+    public Long getId(){
+        return id;
+    }
+
+    public String getTicketName() {
+        return ticketName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
 }

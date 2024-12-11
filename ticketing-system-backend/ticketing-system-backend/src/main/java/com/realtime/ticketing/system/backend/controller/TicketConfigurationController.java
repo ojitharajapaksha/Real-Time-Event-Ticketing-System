@@ -13,27 +13,25 @@ import java.util.List;
 public class TicketConfigurationController {
 
     @Autowired
-    private TicketService service;
-    @Autowired
     private TicketService ticketService;
 
     @PostMapping("/configure")
     public String configureSystem(@RequestBody TicketConfiguration config) {
         ticketService.configureSystem(config);
-        return "System Configuration Successfull.";
+        return "System Configuration Successful.";
     }
 
     @PostMapping("/start")
     public String startSystem() {
         ticketService.startSystem();
-        return "System Started."
+        return "System Started.";
 
     }
 
     @PostMapping("/stop")
-    public String startSystem() {
+    public String stopSystem() {
         ticketService.stopSystem();
-        return "System Stopped."
+        return "System Stopped.";
     }
 
     @GetMapping("/logs")
@@ -41,7 +39,7 @@ public class TicketConfigurationController {
         return ticketService.getLogs();
     }
 
-    @GetMapping("/ticketCount")
+    @GetMapping("/ticket-count")
     public int getTicketCount() {
         return ticketService.getTicketCount();
     }
