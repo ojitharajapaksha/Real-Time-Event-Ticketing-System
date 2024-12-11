@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+// Displaying the Real-Time ticket status
 const TicketStatus = () => {
   const [ticketCount, setTicketCount] = useState(0);
 
@@ -8,6 +9,7 @@ const TicketStatus = () => {
     const fetchTicketCount = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/ticket-count');
+        // Update ticket count
         setTicketCount(response.data); 
       } catch (err) {
         console.error('Failed to fetch ticket count:', err);
@@ -15,8 +17,10 @@ const TicketStatus = () => {
     };
   
     fetchTicketCount();
+    // Ticket count for every 3 seconds  
     const interval = setInterval(fetchTicketCount, 3000); 
   
+    // Cleanup interval on unmount
     return () => clearInterval(interval); 
   }, []);  
 

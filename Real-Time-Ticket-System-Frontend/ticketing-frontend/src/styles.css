@@ -1,3 +1,4 @@
+/*CSS for Delete log buttons */
 .delete-logs-btn {
   background: #dc3545;
   color: #fff;
@@ -12,6 +13,7 @@
   opacity: 0.9;
 }
 
+/*Body styling*/
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f0f8ff;
@@ -28,6 +30,7 @@ h1 {
   color: #333;
 }
 
+/*Common styles for forms, control panel, logs, and ticket status containers*/
 .form, .control-panel, .log-display, .ticket-status {
   margin: 20px auto;
   padding: 20px;
@@ -39,13 +42,21 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/*Styles for form inputs */
 .form input {
   display: block;
-  width: 100%;
+  width: 95%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+
+.form label {
+  display: block; 
+  text-align: left; 
+  margin-bottom: 5px; 
+  font-weight: bold;
 }
 
 button {
@@ -80,6 +91,7 @@ button:hover {
   border-bottom: 1px solid #ddd;
 }
 
+/* Styles for error messages */
 .error {
   color: #dc3545;
   font-size: 0.9rem;
