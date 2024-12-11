@@ -1,3 +1,4 @@
+// Ticket Configuration Class this is holds the configuration settings for the ticketing system
 import java.io.*;
 
 public class TicketConfiguration {
@@ -8,6 +9,7 @@ public class TicketConfiguration {
 
     public TicketConfiguration(){}
 
+    // Constructor to initialize all the ticket configuration settings
     public TicketConfiguration(int totalTickets, int ticketReleaseRate, int customerRetrievalRate, int maxTicketCapacity){
         this.totalTickets=totalTickets;
         this.ticketReleaseRate=ticketReleaseRate;
@@ -15,6 +17,7 @@ public class TicketConfiguration {
         this.maxTicketCapacity=maxTicketCapacity;
     }
 
+    // Getter method for ticket configuration
     public int getTotalTickets(){
         return totalTickets;
     }
@@ -31,6 +34,7 @@ public class TicketConfiguration {
         return maxTicketCapacity;
     }
 
+    // Setter method for  ticket configuration
     public void setTotalTickets(int totalTickets) {
         this.totalTickets = totalTickets;
     }
@@ -47,6 +51,7 @@ public class TicketConfiguration {
         this.maxTicketCapacity = maxTicketCapacity;
     }
 
+    // Saves the current configuration to a text file
     public void saveToFile(String filename) throws IOException{
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filename))){
             writer.write("Total number of tickets: " + totalTickets + "\n");
@@ -56,6 +61,7 @@ public class TicketConfiguration {
         }
     }
 
+    // Loads the configuration from file
     public static TicketConfiguration loadFromFile(String filename) throws IOException{
         try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
             TicketConfiguration config = new TicketConfiguration();
