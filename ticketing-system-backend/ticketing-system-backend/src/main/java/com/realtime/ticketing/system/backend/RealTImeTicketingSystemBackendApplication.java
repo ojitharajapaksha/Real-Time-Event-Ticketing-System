@@ -1,11 +1,11 @@
-package com.realtime.ticketing.backend;
+package com.realtime.ticketing.system.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TicketingSystemBackendApplication {
+public class RealTImeTicketingSystemBackendApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(TicketingSystemBackendApplication.class, args);
+		SpringApplication.run(RealTImeTicketingSystemBackendApplication.class, args);
 	}
 }

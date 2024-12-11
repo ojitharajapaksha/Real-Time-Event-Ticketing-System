@@ -1,4 +1,4 @@
-package com.realtime.ticketing.backend.model;
+package com.realtime.ticketing.system.backend.model;
 import jakarta.persistence.*;
 
 @Entity

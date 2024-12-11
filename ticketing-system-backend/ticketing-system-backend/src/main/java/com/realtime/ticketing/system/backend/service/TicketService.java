@@ -1,4 +1,4 @@
-package com.realtime.ticketing.backend.service;
+package com.realtime.ticketing.system.backend.service;
 
 import org.springframework.stereotype.Service;
 
@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Service
-public class TicketPoolService {
+public class TicketService {
     private final BlockingQueue<String> tickets = new LinkedBlockingQueue<>();
     private final int maxCapacity = 10;
 
