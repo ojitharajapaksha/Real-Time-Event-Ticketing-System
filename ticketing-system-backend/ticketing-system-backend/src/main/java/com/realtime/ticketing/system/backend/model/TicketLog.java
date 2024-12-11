@@ -14,39 +14,16 @@ public class TicketLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
+    private Date timestamp;
     private String type;
     private String action;
 
-    public TicketLog(){}
+    public TicketLog() {}
 
-    public TicketLog(String message, Date timestamp, String type, String action){
+    public TicketLog(String message, Date timestamp, String type, String action) {
         this.message = message;
         this.timestamp = timestamp;
         this.type = type;
         this.action = action;
-    }
-
-    public Long getId(){
-        return id;
-    }
-
-    public String getMessage(){
-        return message;
-    }
-
-    public Date getTimestamp(){
-        return timestamp;
-    }
-
-    public void setId(Long Id){
-        this.Id;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setTimestamp(Date timestamp){
-        this.timestamp = timestamp;
     }
 }

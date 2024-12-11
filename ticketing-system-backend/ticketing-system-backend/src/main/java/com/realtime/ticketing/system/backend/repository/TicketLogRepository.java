@@ -1,8 +1,8 @@
 package com.realtime.ticketing.system.backend.repository;
 
-import com.realtime.ticketing.system.backend.model.TicketConfiguration;
+import com.realtime.ticketing.system.backend.model.TicketLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TicketLogRepository extends JpaRepository <TicketConfiguration, Long> {
-
+public interface TicketLogRepository extends JpaRepository<TicketLog, Long> {
 }
+

@@ -7,14 +7,12 @@ import com.realtime.ticketing.system.backend.repository.TicketLogRepository;
 import com.realtime.ticketing.system.backend.repository.TicketPoolRepository;
 import com.realtime.ticketing.system.backend.threads.TicketCustomer;
 import com.realtime.ticketing.system.backend.threads.TicketVendor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.*;
 
-@Slf4j
 @Service
 public class TicketService {
 
@@ -29,27 +27,27 @@ public class TicketService {
     private final ExecutorService executorService;
     private boolean isRunning;
 
-    public TicketService(){
+    public TicketService() {
         this.isRunning = false;
         this.ticketQueue = new LinkedBlockingQueue<>();
         this.executorService = Executors.newCachedThreadPool();
     }
 
-    public void configureSystem(TicketConfiguration config){
+    public void configureSystem(TicketConfiguration config) {
         validateConfiguration(config);
         this.configuration = config;
-        logEvent("System configured: " + config.toString(), "INFO", "configure system");
+        logEvent("System configured: " + config.toString(), "INFO", "configure_system");
     }
 
-    public void startSystem(){
-        if (isRunning){
+    public void startSystem() {
+        if (isRunning) {
             throw new IllegalStateException("Error: System is already running.");
         }
-        if (configuration == null){
+        if (configuration == null) {
             throw new IllegalStateException("Error: System is not configured. Configure before starting.");
         }
-        isRunning=true;
-        logEvent("System started.", "INFO", "start system");
+        isRunning = true;
+        logEvent("System started.", "INFO", "start_system");
 
         TicketVendor vendor = new TicketVendor(this, configuration.getTotalTickets(), configuration.getTicketReleaseRate());
         TicketCustomer customer = new TicketCustomer(this, configuration.getCustomerRetrievalRate());
@@ -57,70 +55,73 @@ public class TicketService {
         executorService.submit(customer);
     }
 
-    public void stopSystem(){
-        if (!isRunning){
+    public void stopSystem() {
+        if (!isRunning) {
             throw new IllegalStateException("Error: System is not running.");
         }
-        isRunning=false;
+        isRunning = false;
         executorService.shutdownNow();
-        logEvent("System stopped.", "INFO", "stop system");
+        logEvent("System stopped.", "INFO", "stop_system");
     }
 
-    public void addTicket(String ticket){
-        try{
-            if (ticketQueue.size() >= configuration.getMaxTicketCapacity()){
-                logEvent("Ticket pool capacity reached. Ticket rejected: " + ticket, "WARNING", "add ticket");
+    public void addTicket(String ticket) {
+        try {
+            if (ticketQueue.size() >= configuration.getMaxTicketCapacity()) {
+                logEvent("Ticket pool capacity reached. Ticket rejected: " + ticket, "WARNING", "add_ticket");
                 return;
             }
             ticketQueue.put(ticket);
             ticketPoolRepository.save(new TicketPool(ticket));
             logEvent("Ticket added: " + ticket, "INFO", "add_ticket");
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logEvent("Error adding ticket: " + e.getMessage(), "ERROR", "add ticket");
+            logEvent("Error adding ticket: " + e.getMessage(), "ERROR", "add_ticket");
         }
     }
 
-    public String removeTicket(){
+    public String removeTicket() {
         String ticket = ticketQueue.poll();
-        if (ticket != null){
+        if (ticket != null) {
             ticketPoolRepository.deleteByTicketName(ticket);
             logEvent("Ticket purchased: " + ticket, "INFO", "remove_ticket");
-        }else {
+        } else {
             logEvent("No tickets available for purchase.", "WARNING", "remove_ticket");
         }
         return ticket;
     }
 
-    public int getTicketCount(){
-        return ticketQueue.size();
+    public int getTicketCount() {
+        return ticketQueue.size(); // Dynamically returns the size of the ticket queue
     }
 
-    public List<TicketLog> getLogs(){
+    public List<TicketLog> getLogs() {
         return logRepository.findAll();
     }
 
-    public void deleteAllLogs(){
-        try{
+    public void deleteAllLogs() {
+        try {
             logRepository.deleteAll();
-            logEvent("All logs have been deleted.", "INFO", "delete logs");
-        }catch (Exception e){
-            logEvent("Error deleting logs: " + e.getMessage(), "ERROR", "delete logs");
+            logEvent("All logs have been deleted.", "INFO", "delete_logs");
+        } catch (Exception e) {
+            logEvent("Error deleting logs: " + e.getMessage(), "ERROR", "delete_logs");
             throw new RuntimeException("Error deleting logs: " + e.getMessage());
         }
     }
 
-    private void logEvent(String message, String type, String action){
+    private void logEvent(String message, String type, String action) {
         logRepository.save(new TicketLog(message, new Date(), type, action));
     }
 
-    private void validateConfiguration(TicketConfiguration config){
-        if (config.getTotalTickets() <= 0 || config.getMaxTicketCapacity() <= 0){
-            throw new IllegalArgumentException("All configuration inputs must be positive integers.");
+    private void validateConfiguration(TicketConfiguration config) {
+        if (config.getTotalTickets() <= 0 || config.getTicketReleaseRate() <= 0 ||
+                config.getCustomerRetrievalRate() <= 0 || config.getMaxTicketCapacity() <= 0) {
+            throw new IllegalArgumentException("All configuration parameters must be positive integers.");
         }
-        if (config.getMaxTicketCapacity() < config.getTotalTickets()){
-            throw new IllegalArgumentException("Maximum ticket capacity cannot be less than total number of tickets.");
+        if (config.getMaxTicketCapacity() < config.getTotalTickets()) {
+            throw new IllegalArgumentException("Maximum ticket capacity cannot be less than the total number of tickets.");
         }
     }
 }
+
+
 
