@@ -17,7 +17,20 @@ public class TicketConfiguration {
     private int customerRetrievalRate;
     private int maxTicketCapacity;
 
-    public int getTotalTickets(){
+    public TicketConfiguration(){}
+
+    public TicketConfiguration(int totalTickets, int ticketReleaseRate, int customerRetrievalRate, int maxTicketCapacity){
+        this.totalTickets=totalTickets;
+        this.ticketReleaseRate=ticketReleaseRate;
+        this.customerRetrievalRate=customerRetrievalRate;
+        this.maxTicketCapacity=maxTicketCapacity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getTotalTickets() {
         return totalTickets;
     }
 
@@ -33,16 +46,20 @@ public class TicketConfiguration {
         return maxTicketCapacity;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setTotalTickets(int totalTickets) {
         this.totalTickets = totalTickets;
     }
 
-    public void setTicketReleaseRate(int ticketReleaseRate) {
-        this.ticketReleaseRate = ticketReleaseRate;
-    }
-
     public void setCustomerRetrievalRate(int customerRetrievalRate) {
         this.customerRetrievalRate = customerRetrievalRate;
+    }
+
+    public void setTicketReleaseRate(int ticketReleaseRate) {
+        this.ticketReleaseRate = ticketReleaseRate;
     }
 
     public void setMaxTicketCapacity(int maxTicketCapacity) {
@@ -52,10 +69,10 @@ public class TicketConfiguration {
     @Override
     public String toString(){
         return "TicketConfiguration{" +
-        "totalTickets = " + totalTickets +
-        ", ticketReleaseRate = " + ticketReleaseRate +
-                ", customerRetrievalRate = " + customerRetrievalRate +
-                ", maxTicketCapacity = " + maxTicketCapacity +
+                "id=" + id +
+                ", totalTickets=" + ticketReleaseRate +
+                ", customerRetrievalRate=" + customerRetrievalRate +
+                ", maxTicketCapacity=" + maxTicketCapacity +
                 '}';
     }
 }
