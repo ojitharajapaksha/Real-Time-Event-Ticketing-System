@@ -9,11 +9,15 @@ public class TicketCustomer implements Runnable {
     private final TicketService ticketService;
     private final int retrievalRate;
 
+    // The customer class represents the thread that purchasing tickets
     public TicketCustomer(TicketService ticketService, int retrievalRate) {
+        // Ticket service for managing ticket operations
         this.ticketService = ticketService;
+        // Ticket retrieved rate
         this.retrievalRate = retrievalRate;
     }
 
+    // Run methods is executed when the thread starts.
     @Override
     public void run() {
 
